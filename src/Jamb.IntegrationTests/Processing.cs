@@ -9,7 +9,7 @@ namespace Jamb.IntegrationTests
         [Test]
         public void ApplyingProcessorToEntireTable()
         {
-            var table = new Table(2);
+            var table = new Table();
 
             table.CreateColumn("firstname", new[] { "bob", "ben" });
             table.CreateColumn("lastname", new[] { "smith", "jenkins" });
@@ -31,7 +31,7 @@ namespace Jamb.IntegrationTests
 
                 var fullnames = firstnames.Zip(lastnames, FormatFullName);
 
-                dataAdapter.CreateColumn("fullname", fullnames.ToArray());
+                dataAdapter.CreateColumn("fullname", fullnames);
             }
 
             private string FormatFullName(string firstname, string lastname)

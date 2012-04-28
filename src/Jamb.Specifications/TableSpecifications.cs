@@ -12,7 +12,7 @@ namespace Jamb.Specifications
         public class when_definining_column
         {
             Establish context = () =>
-                table = new Table(100);
+                table = new Table();
 
             Because of = () =>
                 header = table.CreateColumn<string>("firstname");
@@ -49,11 +49,14 @@ namespace Jamb.Specifications
         [Subject(typeof(Table))]
         public class when_getting_data_for_empty_reference_type_column : with_table
         {
+            Establish context = () =>
+                table.CreateColumn("creditscore", new[] { 1, 2, 3, 4, 5 });
+
             Because of = () =>
                 data = table.GetData<string>("firstname");
 
             It should_return_enumerable_with_same_number_rows_as_table = () =>
-                data.Count().ShouldEqual(100);
+                data.Count().ShouldEqual(5);
 
             It should_return_all_null_values = () =>
                 data.ShouldEachConformTo(d => d == null);
@@ -74,27 +77,10 @@ namespace Jamb.Specifications
         }
 
         [Subject(typeof(Table))]
-        public class when_creating_column_with_data_not_equal_to_height_of_table
-        {
-            Establish context = () =>
-                table = new Table(4);
-
-            Because of = () =>
-                exception = Catch.Exception(() => table.CreateColumn("name", new[] { 1, 2 }));
-
-            It should_throw_argument_exception = () =>
-                exception.ShouldBeOfType<ArgumentException>();
-
-            static Table table;
-
-            static Exception exception;
-        }
-
-        [Subject(typeof(Table))]
         public class when_creating_column_with_data
         {
             Establish context = () =>
-                table = new Table(2);
+                table = new Table();
 
             Because of = () =>
                 column = table.CreateColumn("name", new[] { 1, 2 });
@@ -129,7 +115,7 @@ namespace Jamb.Specifications
         {
             Establish context = () =>
             {
-                table = new Table(100);
+                table = new Table();
                 table.CreateColumn<string>("firstname");
                 table.CreateColumn<int>("age");
             };

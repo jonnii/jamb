@@ -11,12 +11,7 @@ namespace Jamb
 
         private readonly List<IDataColumn> dataColumns = new List<IDataColumn>();
 
-        public Table(int rows)
-        {
-            NumRows = rows;
-        }
-
-        public int NumRows { get; private set; }
+        private int numRows = 0;
 
         public IColumnHeader<T> CreateColumn<T>(string name)
         {
@@ -33,15 +28,8 @@ namespace Jamb
             return header;
         }
 
-        public IColumnHeader<T> CreateColumn<T>(string name, T[] data)
+        public IColumnHeader<T> CreateColumn<T>(string name, IEnumerable<T> data)
         {
-            if (data.Length != NumRows)
-            {
-                throw new ArgumentException(
-                    "The number of items in a data column must be equal to the number of rows in the table",
-                    "data");
-            }
-
             var columnHeader = CreateColumn<T>(name);
 
             SetData(columnHeader, data);
@@ -49,7 +37,7 @@ namespace Jamb
             return columnHeader;
         }
 
-        private void SetData<T>(IColumnHeader header, T[] data)
+        private void SetData<T>(IColumnHeader header, IEnumerable<T> data)
         {
             if (header.HasData)
             {
@@ -59,6 +47,7 @@ namespace Jamb
             var dataColumn = new DataColumn<T>(data);
             dataColumns.Add(dataColumn);
             header.DataColumnIndex = dataColumns.Count - 1;
+            numRows = dataColumn.Length;
         }
 
         public IEnumerable<T> GetData<T>(string name)
@@ -77,7 +66,7 @@ namespace Jamb
 
         private IEnumerable<T> CreateEmptyDataColumn<T>()
         {
-            return Enumerable.Range(0, NumRows).Select(i => default(T));
+            return Enumerable.Range(0, numRows).Select(i => default(T));
         }
 
         public void Apply(ITableProcessor processor)

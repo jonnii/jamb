@@ -6,6 +6,6 @@ namespace Jamb
     {
         IEnumerable<T> GetData<T>(string name);
 
-        IColumnHeader<T> CreateColumn<T>(string name, T[] data);
+        IColumnHeader<T> CreateColumn<T>(string name, IEnumerable<T> data);
     }
 }

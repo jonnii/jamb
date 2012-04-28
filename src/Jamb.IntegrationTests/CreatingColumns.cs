@@ -9,7 +9,7 @@ namespace Jamb.IntegrationTests
         [Test]
         public void ShouldCreateColumnWithoutData()
         {
-            var table = new Table(1000);
+            var table = new Table();
 
             var columnDefinition = table.CreateColumn<string>("firstname");
 
@@ -18,14 +18,13 @@ namespace Jamb.IntegrationTests
 
             var data = table.GetData<string>("firstname");
 
-            Assert.That(data.Count(), Is.EqualTo(1000));
-            Assert.That(data.All(d => d == null));
+            Assert.That(data.Count(), Is.EqualTo(0));
         }
 
         [Test]
         public void ShouldCreateColumnWithData()
         {
-            var table = new Table(2);
+            var table = new Table();
 
             var columnDefinition = table.CreateColumn("firstname", new[] { "bob", "ben" });
 
