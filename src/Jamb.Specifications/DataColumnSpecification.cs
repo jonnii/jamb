@@ -26,6 +26,25 @@ namespace Jamb.Specifications
         }
 
         [Subject(typeof(DataColumn<>))]
+        public class when_getting_enumerator_with_length
+        {
+            Establish context = () =>
+            {
+                var segments = new List<DataColumnSegment<int>>
+                {
+                    new DataColumnSegment<int>(0, new []{1,2,3,4,5})
+                };
+
+                column = new DataColumn<int>(segments);
+            };
+
+            It should_calculate_length = () =>
+                column.GetEnumerable(100).Count().ShouldEqual(100);
+
+            static DataColumn<int> column;
+        }
+
+        [Subject(typeof(DataColumn<>))]
         public class when_column_has_multiple_segments
         {
             Establish context = () =>

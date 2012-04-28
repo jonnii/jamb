@@ -22,6 +22,22 @@ namespace Jamb.IntegrationTests
             Assert.That(fullnames.First(), Is.EqualTo("bob smith"));
         }
 
+        [Test]
+        public void ApplyingProcessorToEntireTableWithColumnsOfDifferentLengths()
+        {
+            var table = new Table();
+
+            table.CreateColumn("firstname", new[] { "bob", "ben", "bill" });
+            table.CreateColumn("lastname", new[] { "smith", "jenkins" });
+
+            table.Apply(new GenerateFullName());
+
+            var fullnames = table.GetData<string>("fullname");
+
+            Assert.That(fullnames.Count(), Is.EqualTo(3));
+            Assert.That(fullnames.Last(), Is.EqualTo("bill unknown"));
+        }
+
         public class GenerateFullName : ITableProcessor
         {
             public void Run(IDataAdapter dataAdapter)
@@ -36,7 +52,7 @@ namespace Jamb.IntegrationTests
 
             private string FormatFullName(string firstname, string lastname)
             {
-                return string.Concat(firstname, " ", lastname);
+                return string.Concat(firstname, " ", lastname ?? "unknown");
             }
         }
     }

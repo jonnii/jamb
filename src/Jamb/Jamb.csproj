@@ -43,6 +43,7 @@
     <Compile Include="ColumnHeader.cs" />
     <Compile Include="DataColumnBuilder.cs" />
     <Compile Include="DataColumnSegment.cs" />
+    <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="IColumnHeader.cs" />
     <Compile Include="IDataAdapter.cs" />
     <Compile Include="IDataColumn.cs" />

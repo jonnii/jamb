@@ -13,7 +13,7 @@ namespace Jamb
 
         private readonly List<IDataColumn> dataColumns = new List<IDataColumn>();
 
-        private int numRows = 0;
+        private int numRows;
 
         public IColumnHeader<T> CreateColumn<T>(string name)
         {
@@ -50,7 +50,7 @@ namespace Jamb
             dataColumns.Add(dataColumn);
 
             header.DataColumnIndex = dataColumns.Count - 1;
-            numRows = dataColumn.Length;
+            numRows = Math.Max(dataColumn.Length, numRows);
         }
 
         public IEnumerable<T> GetData<T>(string name)
@@ -61,7 +61,7 @@ namespace Jamb
             {
                 var index = columnHeader.DataColumnIndex;
                 var dataColumn = (DataColumn<T>)dataColumns[index];
-                return dataColumn.GetEnumerable();
+                return dataColumn.GetEnumerable(numRows);
             }
 
             return CreateEmptyDataColumn<T>();
