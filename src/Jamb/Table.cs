@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Jamb
 {
-    public class Table : ITable
+    public class Table : ITable, IDataAdapter
     {
         private readonly Dictionary<string, IColumnHeader> columnHeaders =
             new Dictionary<string, IColumnHeader>();
@@ -49,7 +49,7 @@ namespace Jamb
             return columnHeader;
         }
 
-        private void SetData<T>(IColumnHeader<T> header, T[] data)
+        private void SetData<T>(IColumnHeader header, T[] data)
         {
             if (header.HasData)
             {
@@ -78,6 +78,11 @@ namespace Jamb
         private IEnumerable<T> CreateEmptyDataColumn<T>()
         {
             return Enumerable.Range(0, NumRows).Select(i => default(T));
+        }
+
+        public void Apply(ITableProcessor processor)
+        {
+            processor.Run(this);
         }
     }
 }

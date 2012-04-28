@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Machine.Fakes;
 using Machine.Specifications;
 
 namespace Jamb.Specifications
@@ -109,7 +110,22 @@ namespace Jamb.Specifications
             static IColumnHeader<int> column;
         }
 
-        public class with_table
+        [Subject(typeof(Table))]
+        public class when_applying_processor : with_table
+        {
+            Establish context = () =>
+                processor = An<ITableProcessor>();
+
+            Because of = () =>
+                table.Apply(processor);
+
+            It should_run_processor = () =>
+                processor.WasToldTo(p => p.Run(Param.IsAny<Table>()));
+
+            static ITableProcessor processor;
+        }
+
+        public class with_table : WithFakes
         {
             Establish context = () =>
             {

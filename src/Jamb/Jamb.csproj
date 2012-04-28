@@ -42,8 +42,10 @@
     <Compile Include="DataColumn.cs" />
     <Compile Include="ColumnHeader.cs" />
     <Compile Include="IColumnHeader.cs" />
+    <Compile Include="IDataAdapter.cs" />
     <Compile Include="IDataColumn.cs" />
     <Compile Include="ITable.cs" />
+    <Compile Include="ITableProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>

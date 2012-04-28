@@ -7,7 +7,7 @@ namespace Jamb.IntegrationTests
     public class CreatingColumns
     {
         [Test]
-        public void ShouldCreateolumnWithoutData()
+        public void ShouldCreateColumnWithoutData()
         {
             var table = new Table(1000);
 
