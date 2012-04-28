@@ -9,6 +9,8 @@ namespace Jamb
         private readonly Dictionary<string, IColumnHeader> columnHeaders =
             new Dictionary<string, IColumnHeader>();
 
+        private readonly DataColumnBuilder dataColumnBuilder = new DataColumnBuilder();
+
         private readonly List<IDataColumn> dataColumns = new List<IDataColumn>();
 
         private int numRows = 0;
@@ -44,8 +46,9 @@ namespace Jamb
                 throw new NotImplementedException();
             }
 
-            var dataColumn = new DataColumn<T>(data);
+            var dataColumn = dataColumnBuilder.Build(data);
             dataColumns.Add(dataColumn);
+
             header.DataColumnIndex = dataColumns.Count - 1;
             numRows = dataColumn.Length;
         }
@@ -58,7 +61,7 @@ namespace Jamb
             {
                 var index = columnHeader.DataColumnIndex;
                 var dataColumn = (DataColumn<T>)dataColumns[index];
-                return dataColumn.Data;
+                return dataColumn.GetEnumerable();
             }
 
             return CreateEmptyDataColumn<T>();
