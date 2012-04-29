@@ -15,13 +15,13 @@ namespace Jamb
             this.func = func;
         }
 
-        public void Run(IDataAdapter dataAdapter)
+        public void Run(ITableFrame tableFrame)
         {
-            var data = dataAdapter.GetData<T>(name);
+            var data = tableFrame.GetData<T>(name);
 
             var transformed = data.Select(func);
 
-            dataAdapter.SetData(name, transformed);
+            tableFrame.SetData(name, transformed);
         }
     }
 }

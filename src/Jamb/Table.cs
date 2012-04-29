@@ -5,7 +5,7 @@ using Jamb.Extensions;
 
 namespace Jamb
 {
-    public class Table : ITable, IDataAdapter
+    public class Table : ITable, ITableFrame
     {
         private readonly DataColumnBuilder dataColumnBuilder = new DataColumnBuilder();
 
@@ -91,7 +91,6 @@ namespace Jamb
         public void Apply<T>(IColumnHeader<T> columnHeader, Func<T, T> func)
         {
             var processor = new SimpleTableProcessor<T>(columnHeader.Name, func);
-
             processor.Run(this);
         }
     }

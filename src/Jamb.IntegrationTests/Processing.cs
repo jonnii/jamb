@@ -65,26 +65,26 @@ namespace Jamb.IntegrationTests
 
         public class MultiplyPercentages : ITableProcessor
         {
-            public void Run(IDataAdapter dataAdapter)
+            public void Run(ITableFrame tableFrame)
             {
-                var percentages = dataAdapter.GetData<decimal>("percentage");
+                var percentages = tableFrame.GetData<decimal>("percentage");
 
                 var normalized = percentages.Select(p => p * 100m);
 
-                dataAdapter.SetData("percentage", normalized);
+                tableFrame.SetData("percentage", normalized);
             }
         }
 
         public class GenerateFullName : ITableProcessor
         {
-            public void Run(IDataAdapter dataAdapter)
+            public void Run(ITableFrame tableFrame)
             {
-                var firstnames = dataAdapter.GetData<string>("firstname");
-                var lastnames = dataAdapter.GetData<string>("lastname");
+                var firstnames = tableFrame.GetData<string>("firstname");
+                var lastnames = tableFrame.GetData<string>("lastname");
 
                 var fullnames = firstnames.Zip(lastnames, FormatFullName);
 
-                dataAdapter.CreateColumn("fullname", fullnames);
+                tableFrame.CreateColumn("fullname", fullnames);
             }
 
             private string FormatFullName(string firstname, string lastname)

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Jamb
 {
-    public interface IDataAdapter
+    public interface ITableFrame
     {
         IEnumerable<T> GetData<T>(string name);
 

@@ -45,7 +45,7 @@
     <Compile Include="DataColumnSegment.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="IColumnHeader.cs" />
-    <Compile Include="IDataAdapter.cs" />
+    <Compile Include="ITableFrame.cs" />
     <Compile Include="IDataColumn.cs" />
     <Compile Include="ITable.cs" />
     <Compile Include="ITableProcessor.cs" />
