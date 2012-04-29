@@ -27,11 +27,11 @@ namespace Jamb.Specifications
                 header.HasData.ShouldBeFalse();
 
             It should_set_data_column_index = () =>
-                header.DataColumnIndex.ShouldEqual(-1);
+                header.DataColumns.Any().ShouldBeFalse();
 
             static Table table;
 
-            static IColumnHeader<string> header;
+            static IColumnHeader header;
         }
 
         [Subject(typeof(Table))]
@@ -89,11 +89,11 @@ namespace Jamb.Specifications
                 column.HasData.ShouldBeTrue();
 
             It should_set_data_column_index = () =>
-                column.DataColumnIndex.ShouldEqual(0);
+                column.DataColumns.First().ShouldEqual(0);
 
             static Table table;
 
-            static IColumnHeader<int> column;
+            static IColumnHeader column;
         }
 
         [Subject(typeof(Table))]

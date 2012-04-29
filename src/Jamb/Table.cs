@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Jamb.Extensions;
 
 namespace Jamb
 {
     public class Table : ITable, IDataAdapter
     {
-        private readonly Dictionary<string, IColumnHeader> columnHeaders =
-            new Dictionary<string, IColumnHeader>();
-
         private readonly DataColumnBuilder dataColumnBuilder = new DataColumnBuilder();
+
+        private readonly Dictionary<string, IColumnHeader> columnHeaders = new Dictionary<string, IColumnHeader>();
 
         private readonly List<IDataColumn> dataColumns = new List<IDataColumn>();
 
@@ -39,27 +39,31 @@ namespace Jamb
             return columnHeader;
         }
 
+        public IColumnHeader GetColumnHeader(string name)
+        {
+            return columnHeaders[name];
+        }
+
+        public void SetData<T>(string columnName, IEnumerable<T> data)
+        {
+            var header = GetColumnHeader(columnName);
+            SetData(header, data);
+        }
+
         private void SetData<T>(IColumnHeader header, IEnumerable<T> data)
         {
-            if (header.HasData)
-            {
-                throw new NotImplementedException();
-            }
-
             var dataColumn = dataColumnBuilder.Build(data);
             dataColumns.Add(dataColumn);
 
-            header.DataColumnIndex = dataColumns.Count - 1;
+            header.SetDataColumn(dataColumns.Count - 1);
             numRows = Math.Max(dataColumn.Length, numRows);
         }
 
-        public IEnumerable<T> GetData<T>(string name)
+        public IEnumerable<T> GetData<T>(IColumnHeader<T> columnHeader)
         {
-            var columnHeader = columnHeaders[name];
-
             if (columnHeader.HasData)
             {
-                var index = columnHeader.DataColumnIndex;
+                var index = columnHeader.DataColumns.First();
                 var dataColumn = (DataColumn<T>)dataColumns[index];
                 return dataColumn.GetEnumerable(numRows);
             }
@@ -67,13 +71,27 @@ namespace Jamb
             return CreateEmptyDataColumn<T>();
         }
 
+        public IEnumerable<T> GetData<T>(string columnName)
+        {
+            var columnHeader = (IColumnHeader<T>)columnHeaders[columnName];
+
+            return GetData(columnHeader);
+        }
+
         private IEnumerable<T> CreateEmptyDataColumn<T>()
         {
-            return Enumerable.Range(0, numRows).Select(i => default(T));
+            return Padding.Create<T>(numRows);
         }
 
         public void Apply(ITableProcessor processor)
         {
+            processor.Run(this);
+        }
+
+        public void Apply<T>(IColumnHeader<T> columnHeader, Func<T, T> func)
+        {
+            var processor = new SimpleTableProcessor<T>(columnHeader.Name, func);
+
             processor.Run(this);
         }
     }

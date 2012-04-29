@@ -38,6 +38,43 @@ namespace Jamb.IntegrationTests
             Assert.That(fullnames.Last(), Is.EqualTo("bill unknown"));
         }
 
+        [Test]
+        public void ApplyingProcessorToSingleColumn()
+        {
+            var table = new Table();
+
+            table.CreateColumn("percentage", new[] { 1.0m, 0.8m, 0.35m });
+            table.Apply(new MultiplyPercentages());
+
+            var columnHeader = table.GetColumnHeader("percentage");
+
+            Assert.That(columnHeader.DataColumns.Count(), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void ApplyProcessorShort()
+        {
+            var table = new Table();
+
+            var column = table.CreateColumn("nums", new int?[] { 3, 4, 5, 6, null, null, null, null, 3, 5 });
+
+            table.Apply(column, i => i * 2);
+
+            Assert.That(table.GetData(column).First(), Is.EqualTo(6));
+        }
+
+        public class MultiplyPercentages : ITableProcessor
+        {
+            public void Run(IDataAdapter dataAdapter)
+            {
+                var percentages = dataAdapter.GetData<decimal>("percentage");
+
+                var normalized = percentages.Select(p => p * 100m);
+
+                dataAdapter.SetData("percentage", normalized);
+            }
+        }
+
         public class GenerateFullName : ITableProcessor
         {
             public void Run(IDataAdapter dataAdapter)

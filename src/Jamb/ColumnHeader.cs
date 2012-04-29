@@ -1,13 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Jamb
 {
     public class ColumnHeader<T> : IColumnHeader<T>
     {
+        private readonly LinkedList<int> columns = new LinkedList<int>();
+
         public ColumnHeader(string name)
         {
             Name = name;
-            DataColumnIndex = -1;
         }
 
         public string Name { get; set; }
@@ -19,9 +22,17 @@ namespace Jamb
 
         public bool HasData
         {
-            get { return DataColumnIndex >= 0; }
+            get { return columns.Any(); }
         }
 
-        public int DataColumnIndex { get; set; }
+        public IEnumerable<int> DataColumns
+        {
+            get { return columns; }
+        }
+
+        public void SetDataColumn(int dataColumnIndex)
+        {
+            columns.AddFirst(dataColumnIndex);
+        }
     }
 }

@@ -7,5 +7,7 @@ namespace Jamb
         IEnumerable<T> GetData<T>(string name);
 
         IColumnHeader<T> CreateColumn<T>(string name, IEnumerable<T> data);
+
+        void SetData<T>(string name, IEnumerable<T> data);
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Jamb
 {
@@ -10,11 +11,10 @@ namespace Jamb
 
         bool HasData { get; }
 
-        int DataColumnIndex { get; set; }
+        IEnumerable<int> DataColumns { get; }
+
+        void SetDataColumn(int dataColumnIndex);
     }
 
-    public interface IColumnHeader<T> : IColumnHeader
-    {
-        
-    }
+    public interface IColumnHeader<T> : IColumnHeader { }
 }

@@ -31,9 +31,7 @@ namespace Jamb
                 var segmentPadding = segment.Start - currentStart;
                 if (segmentPadding > 0)
                 {
-                    var padding = Padding.Create<T>(segmentPadding);
-
-                    foreach (var item in padding)
+                    foreach (var item in Padding.Create<T>(segmentPadding))
                     {
                         yield return item;
                     }
@@ -47,14 +45,14 @@ namespace Jamb
                 currentStart = segment.End + 1;
             }
 
-            if (length.HasValue && currentStart < length)
+            if (!length.HasValue || !(currentStart < length))
             {
-                var padding = Padding.Create<T>(length.Value - currentStart);
+                yield break;
+            }
 
-                foreach (var item in padding)
-                {
-                    yield return item;
-                }
+            foreach (var item in Padding.Create<T>(length.Value - currentStart))
+            {
+                yield return item;
             }
         }
     }
