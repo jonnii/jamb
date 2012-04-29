@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Jamb.Extensions;
@@ -9,11 +10,16 @@ namespace Jamb
     {
         private readonly DataColumnBuilder dataColumnBuilder = new DataColumnBuilder();
 
-        private readonly Dictionary<string, IColumnHeader> columnHeaders = new Dictionary<string, IColumnHeader>();
+        private readonly IDictionary<string, IColumnHeader> columnHeaders = new ConcurrentDictionary<string, IColumnHeader>();
 
         private readonly List<IDataColumn> dataColumns = new List<IDataColumn>();
 
         private int numRows;
+
+        public int NumColumns
+        {
+            get { return columnHeaders.Count; }
+        }
 
         public IColumnHeader<T> CreateColumn<T>(string name)
         {

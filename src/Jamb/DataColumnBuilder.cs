@@ -5,6 +5,13 @@ namespace Jamb
 {
     public class DataColumnBuilder
     {
+        public DataColumnBuilder()
+        {
+            DefaultValueTolerance = 2;
+        }
+
+        public int DefaultValueTolerance { get; set; }
+
         public DataColumn<T> Build<T>(IEnumerable<T> source)
         {
             var segments = CreateSegments(source);
@@ -18,15 +25,19 @@ namespace Jamb
             var segmentData = new List<T>();
             var writingSegment = false;
             var currentPosition = 0;
+            var padding = 0;
 
             foreach (var item in source)
             {
-                if (Equals(default(T), item))
+                var isDefaultValue = Equals(default(T), item);
+
+                if (isDefaultValue && padding >= DefaultValueTolerance)
                 {
                     if (writingSegment)
                     {
-                        yield return new DataColumnSegment<T>(start, segmentData);
+                        yield return new DataColumnSegment<T>(start, segmentData.ToArray());
                         writingSegment = false;
+                        padding = 0;
                     }
                 }
                 else
@@ -39,12 +50,21 @@ namespace Jamb
                     }
 
                     segmentData.Add(item);
+
+                    if (isDefaultValue)
+                    {
+                        ++padding;
+                    }
+                    else
+                    {
+                        padding = 0;
+                    }
                 }
 
                 currentPosition++;
             }
 
-            yield return new DataColumnSegment<T>(start, segmentData);
+            yield return new DataColumnSegment<T>(start, segmentData.ToArray());
         }
     }
 }

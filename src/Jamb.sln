@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{943960C7-5
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamb.PerformanceTests", "Jamb.PerformanceTests\Jamb.PerformanceTests.csproj", "{52BF0448-672C-4F61-A31A-37F7954F5F43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{2E50C224-91F0-43BF-ABD8-215D326114C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E50C224-91F0-43BF-ABD8-215D326114C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E50C224-91F0-43BF-ABD8-215D326114C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52BF0448-672C-4F61-A31A-37F7954F5F43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52BF0448-672C-4F61-A31A-37F7954F5F43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52BF0448-672C-4F61-A31A-37F7954F5F43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52BF0448-672C-4F61-A31A-37F7954F5F43}.Release|Any CPU.Build.0 = Release|Any CPU
 		{585FC90A-A088-4200-B729-F685DAC1851E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{585FC90A-A088-4200-B729-F685DAC1851E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{585FC90A-A088-4200-B729-F685DAC1851E}.Release|Any CPU.ActiveCfg = Release|Any CPU
