@@ -54,7 +54,7 @@
     <Compile Include="ITable.cs" />
     <Compile Include="ITableProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleCalculator.cs" />
+    <Compile Include="MarketValueCalculator.cs" />
     <Compile Include="SimpleTableProcessor.cs" />
     <Compile Include="Step.cs" />
     <Compile Include="Table.cs" />

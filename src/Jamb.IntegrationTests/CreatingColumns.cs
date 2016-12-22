@@ -6,10 +6,20 @@ namespace Jamb.IntegrationTests
     [TestFixture]
     public class CreatingColumns
     {
+        public class ComplicatedHeirarchicalCalculation : IStep
+        {
+            public string Name { get; }
+        }
+
+
+
         [Test]
         public void Should()
         {
-            var step = new Step("Calculate Market Value", new SampleCalculator());
+            //var step = Step.WithName("Calculate Market Value").WithCalculator(new MarketValueCalculator());
+
+
+
         }
 
         [Test]
