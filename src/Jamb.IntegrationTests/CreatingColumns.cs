@@ -7,6 +7,12 @@ namespace Jamb.IntegrationTests
     public class CreatingColumns
     {
         [Test]
+        public void Should()
+        {
+            var step = new Step("Calculate Market Value", new SampleCalculator());
+        }
+
+        [Test]
         public void ShouldCreateColumnWithoutData()
         {
             var table = new Table();

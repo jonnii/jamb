@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Jamb</RootNamespace>
     <AssemblyName>Jamb</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,18 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationResult.cs" />
     <Compile Include="DataColumn.cs" />
     <Compile Include="ColumnHeader.cs" />
     <Compile Include="DataColumnBuilder.cs" />
     <Compile Include="DataColumnSegment.cs" />
     <Compile Include="Extensions\EnumerableExtensions.cs" />
+    <Compile Include="ICalculationResult.cs" />
+    <Compile Include="ICalculator.cs" />
     <Compile Include="IColumnHeader.cs" />
     <Compile Include="ITableFrame.cs" />
     <Compile Include="IDataColumn.cs" />
     <Compile Include="ITable.cs" />
     <Compile Include="ITableProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleCalculator.cs" />
     <Compile Include="SimpleTableProcessor.cs" />
+    <Compile Include="Step.cs" />
     <Compile Include="Table.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -41,7 +41,7 @@ namespace Jamb.Specifications
                 exception = Catch.Exception(() => table.CreateColumn<string>("firstname"));
 
             It should_throw_argument_exception = () =>
-                exception.ShouldBeOfType<ArgumentException>();
+                exception.ShouldBeOfExactType<ArgumentException>();
 
             static Exception exception;
         }
